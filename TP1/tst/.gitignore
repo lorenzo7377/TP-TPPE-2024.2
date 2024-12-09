@@ -5,3 +5,6 @@
 /TesteCadastroPensaoAlimenticia.class
 /TesteCalculosDeducoesDependentes.class
 /TesteRendimentos.class
+/TesteCalcularImpostoPorFaixa.class
+/TesteCalcularImposto.class
+/TesteCalcularAliquota.class
