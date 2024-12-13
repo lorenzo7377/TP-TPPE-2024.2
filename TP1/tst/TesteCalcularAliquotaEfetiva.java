@@ -1,11 +1,11 @@
 package tst;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class TesteCalcularAliquota {
+public class TesteCalcularAliquotaEfetiva {
 
 	@Before
 	public void setUp() throws Exception {
