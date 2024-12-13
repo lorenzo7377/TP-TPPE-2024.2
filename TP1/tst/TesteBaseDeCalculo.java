@@ -39,15 +39,45 @@ public class TesteBaseDeCalculo {
 		irpf2.cadastrarContribuicaoPrevidenciaria(500);
 		irpf2.cadastrarDeducaoIntegral("Previdência Privada", 1000);
 		irpf2.cadastrarDeducaoIntegral("Pensão Alimentícia", 1500);
+		
+		// Teste 3
+		var irpf3 = new IRPF();
+
+		irpf3.criarRendimento("Salário", true, 10000);
+		irpf3.cadastrarContribuicaoPrevidenciaria(1000);
+		irpf3.cadastrarDependente("Lorenzo", "Filho");
+		irpf3.cadastrarDependente("maria", "Filha");
+		irpf3.cadastrarContribuicaoPrevidenciaria(500);
+		
+		// Teste 4
+		var irpf4 = new IRPF();
+
+		irpf4.criarRendimento("Salário", true, 12000);
+		irpf4.cadastrarContribuicaoPrevidenciaria(2500);
+		irpf4.cadastrarDependente("Lorenzo", "Filho");
+		irpf4.cadastrarDependente("maria", "Filha");
+		irpf4.cadastrarDependente("eduardo", "Filho");
+		irpf4.cadastrarDeducaoIntegral("Previdência Privada", 1000);
+		irpf4.cadastrarContribuicaoPrevidenciaria(3000);
+		
+		// Teste 5
+		var irpf5 = new IRPF();
+		irpf5.criarRendimento("Salário", true, 1000);
+
+
+
 
 		// Junta os testes
 		return List.of(
 				new TestParam(irpf1, 10000),
-				new TestParam(irpf2, 6810.41f));
+				new TestParam(irpf2, 6810.41f),
+				new TestParam(irpf3, 8120.82f),
+				new TestParam(irpf4, 4931.23f),
+				new TestParam(irpf5, 435.20f));
 	}
 
 	@Test
-	public void test() {
+	public void testaCalcularBase() {
 		assertEquals(param.baseCalculoEsperado, param.irpf().getBaseDeCalculo(), 0.01);
 	}
 }

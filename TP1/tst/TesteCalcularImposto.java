@@ -12,17 +12,15 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 import app.IRPF;
-
 @RunWith(Parameterized.class)
+public class TesteCalcularImposto {
 
-public class TesteCalcularAliquotaEfetiva {
-
-	private record TestParam(IRPF irpf, float aliquota) {
+	private record TestParam(IRPF irpf, float if1, float if2, float if3, float if4, float if5, float imposto) {
 	};
 
 	private final TestParam param;
 
-	public TesteCalcularAliquotaEfetiva(TestParam param) {
+	public TesteCalcularImposto(TestParam param) {
 		this.param = param;
 	}
 
@@ -65,15 +63,41 @@ public class TesteCalcularAliquotaEfetiva {
 
 		// Junta os testes
 		return List.of(
-				new TestParam(irpf1,0.1685f),
-				new TestParam(irpf2, 0),
-				new TestParam(irpf3, 0.1337f),
-				new TestParam(irpf4, 0.0043f),
-				new TestParam(irpf5, 0.0205f));
+				new TestParam(irpf1, 0,42.55f,138.66f,205.56f,1467.21f, 1853.99f),
+				new TestParam(irpf2, 0,0,0,0,0, 0),
+				new TestParam(irpf3, 0,42.55f,138.66f,205.56f,950.43f, 1337.22f),
+				new TestParam(irpf4, 0,13.20f,0,0,0, 13.20f),
+				new TestParam(irpf5, 0,42.55f,101.00f,0,0, 143.55f));
 	}
+
 	@Test
-	public void testaAliquotaEfetiva() {
-		assertEquals(param.aliquota, param.irpf().getAliquotaEfetiva(), 0.01);
+	public void testCalculaImpostoPorFaixa1() {
+		assertEquals(param.if1, param.irpf().getImpostoDevidoPorFaixa(0), 0.01);
+	}
+	
+	@Test
+	public void testCalculaImpostoPorFaixa2() {
+		assertEquals(param.if2, param.irpf().getImpostoDevidoPorFaixa(1), 0.01);
+	}
+	
+	@Test
+	public void testCalculaImpostoPorFaixa3() {
+		assertEquals(param.if3, param.irpf().getImpostoDevidoPorFaixa(2), 0.01);
+	}
+
+	@Test
+	public void testCalculaImpostoPorFaixa4() {
+		assertEquals(param.if4, param.irpf().getImpostoDevidoPorFaixa(3), 0.01);
+	}
+
+	@Test
+	public void testCalculaImpostoPorFaixa5() {
+		assertEquals(param.if5, param.irpf().getImpostoDevidoPorFaixa(4), 0.01);
+	}
+	
+	@Test
+	public void testCalculaImpostoTotalS() {
+		assertEquals(param.imposto, param.irpf().getImpostoDevido(), 0.01);
 	}
 
 }
