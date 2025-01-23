@@ -44,30 +44,40 @@ public class IRPF {
 	 */
 	public void criarRendimento(String nome, boolean tributavel, float valor) {
 		// Adicionar o nome do novo rendimento
-		String[] temp = new String[nomeRendimento.length + 1];
-		for (int i = 0; i < nomeRendimento.length; i++)
-			temp[i] = nomeRendimento[i];
-		temp[nomeRendimento.length] = nome;
-		nomeRendimento = temp;
+		nomeRendimento = adicionaNomeRendimento(nomeRendimento, nome);
 
 		// adicionar tributavel ou nao no vetor
+		rendimentoTributavel = adicionaRendimentoTributavel(tributavel);
+
+		// adicionar valor rendimento ao vetor
+		valorRendimento = adicionaValorRendimento(valor);
+
+		this.numRendimentos += 1;
+		this.totalRendimentos += valor;
+	}
+
+	private float[] adicionaValorRendimento(float valor) {
+		float[] temp3 = new float[valorRendimento.length + 1];
+		for (int i = 0; i < valorRendimento.length; i++)
+			temp3[i] = valorRendimento[i];
+		temp3[valorRendimento.length] = valor;
+		return temp3;
+	}
+
+	private boolean[] adicionaRendimentoTributavel(boolean tributavel) {
 		boolean[] temp2 = new boolean[rendimentoTributavel.length + 1];
 		for (int i = 0; i < rendimentoTributavel.length; i++)
 			temp2[i] = rendimentoTributavel[i];
 		temp2[rendimentoTributavel.length] = tributavel;
-		rendimentoTributavel = temp2;
+		return temp2;
+	}
 
-		// adicionar valor rendimento ao vetor
-		float[] temp3 = new float[valorRendimento.length + 1];
-		for (int i = 0; i < valorRendimento.length; i++) {
-			temp3[i] = valorRendimento[i];
-		}
-		temp3[valorRendimento.length] = valor;
-		valorRendimento = temp3;
-
-		this.numRendimentos += 1;
-		this.totalRendimentos += valor;
-
+	private String[] adicionaNomeRendimento(String[] array, String nome) {
+		String[] temp = new String[array.length + 1];
+		for (int i = 0; i < array.length; i++)
+			temp[i] = array[i];
+		temp[array.length] = nome;
+		return temp;
 	}
 
 	/**
