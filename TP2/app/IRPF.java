@@ -317,52 +317,24 @@ public class IRPF {
 		return (base < 0) ? 0 : base;
 	}
 
-	private static final float[][] TABELA = {
-			{ 4664.68f, 0.275f, 4 },
-			{ 3751.06f, 0.225f, 3 },
-			{ 2826.66f, 0.150f, 2 },
-			{ 2259.21f, 0.075f, 1 }
-	};
-
-	private float[] getImpostoPorFaixa() {
-		var B = getBaseDeCalculo();
-
-		var IR = new float[] { 0, 0, 0, 0, 0 };
-
-		for (var entry : TABELA) {
-			var limite = entry[0];
-			var aliquota = entry[1];
-			var indice = (int) entry[2];
-
-			if (B > limite) {
-				var diff = B - limite;
-				IR[indice] = diff * aliquota;
-				B -= diff;
-			}
-		}
-
-		return IR;
-	}
+	
+	
 
 	public float getImpostoDevidoPorFaixa(int faixa) {
-		if (faixa < 0 || faixa > 4) {
-			throw new IllegalArgumentException("Faixa de imposto inválida");
-		}
-
-		var IR = getImpostoPorFaixa();
-		return IR[faixa];
+		return new ImpostoDevidoPorFaixaObjectMethod(this, faixa).computar();
 	}
 
 	public float getImpostoDevido() {
-		var IR = getImpostoPorFaixa();
 		var total = 0f;
 
-		for (var i = 1; i < IR.length; i++) {
-			total += IR[i];
+		for (int faixa = 1; faixa < 5; faixa++) {
+			var IR = getImpostoDevidoPorFaixa(faixa);
+			total += IR;
 		}
 
 		return total;
 	}
+	
 
 	public float getAliquotaEfetiva() {
 		return getImpostoDevido() / getTotalRendimentosTributaveis();
