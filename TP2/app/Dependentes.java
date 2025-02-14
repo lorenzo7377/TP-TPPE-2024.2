@@ -1,72 +1,44 @@
 package app;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Dependentes {
-	private String[] nomesDependentes;
-	private String[] parentescosDependentes;
-	private int numDependentes;
+	private List<String> nomesDependentes;
+	private List<String> parentescosDependentes;
 
 	public Dependentes() {
-		nomesDependentes = new String[0];
-		parentescosDependentes = new String[0];
-		numDependentes = 0;
+		nomesDependentes = new ArrayList<>();
+		parentescosDependentes = new ArrayList<>();
 	}
 
-	public String[] getNomesDependentes() {
-		return nomesDependentes;
+	public List<String> getNomesDependentes() {
+		return new ArrayList<>(nomesDependentes);
 	}
 
-	public void setNomesDependentes(String[] nomesDependentes) {
-		this.nomesDependentes = nomesDependentes;
-	}
-
-	public String[] getParentescosDependentes() {
-		return parentescosDependentes;
-	}
-
-	public void setParentescosDependentes(String[] parentescosDependentes) {
-		this.parentescosDependentes = parentescosDependentes;
+	public List<String> getParentescosDependentes() {
+		return new ArrayList<>(parentescosDependentes);
 	}
 
 	public int getNumDependentes() {
-		return numDependentes;
-	}
-
-	public void setNumDependentes(int numDependentes) {
-		this.numDependentes = numDependentes;
+		return nomesDependentes.size();
 	}
 
 	public String getParentesco(String dependente) {
-		for (int i = 0; i < nomesDependentes.length; i++) {
-			if (nomesDependentes[i].equalsIgnoreCase(dependente))
-				return parentescosDependentes[i];
-		}
-		return null;
+		int index = nomesDependentes.indexOf(dependente);
+		return index != -1 ? parentescosDependentes.get(index) : null;
 	}
 
-	public Object cadastrarDependente(String nome, String parentesco) {
-		// adicionar dependente
-				String[] temp = new String[nomesDependentes.length + 1];
-				for (int i = 0; i < nomesDependentes.length; i++) {
-					temp[i] = nomesDependentes[i];
-				}
-				temp[nomesDependentes.length] = nome;
-				nomesDependentes = temp;
-
-				String[] temp2 = new String[parentescosDependentes.length + 1];
-				for (int i = 0; i < parentescosDependentes.length; i++) {
-					temp2[i] = parentescosDependentes[i];
-				}
-				temp2[parentescosDependentes.length] = parentesco;
-				parentescosDependentes = temp2;
-
-				numDependentes ++;
-		return null;
+	public void cadastrarDependente(String nome, String parentesco) {
+		nomesDependentes.add(nome);
+		parentescosDependentes.add(parentesco);
 	}
 
-	public String getdependente(String nome) {
+	public String getDependente(String nome) {
 		for (String d : nomesDependentes) {
-			if (d.contains(nome))
+			if (d.contains(nome)) {
 				return d;
+			}
 		}
 		return null;
 	}
